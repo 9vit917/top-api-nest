@@ -16,15 +16,30 @@ import { ReviewService } from './review.service';
 import { REVIEW_NOT_FOUND } from './review.constants';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { IdValidationPipe } from '../pipies/ad-validation.pipe';
+import { TelegramService } from 'src/telegram/telegram.service';
 
 @Controller('review')
 export class ReviewController {
-  constructor(private readonly reviewService: ReviewService) {}
+  constructor(
+    private readonly reviewService: ReviewService,
+    private readonly telegramService: TelegramService,
+  ) {}
 
   @UsePipes(new ValidationPipe())
   @Post('create')
   async create(@Body() dto: CreateReviewDto) {
     return this.reviewService.create(dto);
+  }
+
+  @Post('notify')
+  async notify(@Body() dto: CreateReviewDto) {
+    const message =
+      `Name ${dto.name}\n` +
+      `Title: ${dto.title}\n` +
+      `Descriptions: ${dto.description}\n` +
+      `Raiting: ${dto.rating}\n` +
+      `Product Id: ${dto.productId}`;
+    return this.telegramService.sendMessage(message);
   }
 
   @Get('byProduct/:productId')

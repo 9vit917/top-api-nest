@@ -9,13 +9,17 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from './users/users.module';
 import { getMongoConfig } from './configs/mongo.config';
+import { FilesModule } from './files/files.module';
+import { TelegramModule } from './telegram/telegram.module';
+import { getTelegramConfig } from './configs/telegram.config';
+import { HhModule } from './hh/hh.module';
 
 @Module({
   imports: [
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: getMongoConfig
+      useFactory: getMongoConfig,
     }),
     ConfigModule.forRoot({
       isGlobal: true,
@@ -24,9 +28,16 @@ import { getMongoConfig } from './configs/mongo.config';
     TopPageModule,
     ProductModule,
     ReviewModule,
-    UsersModule
+    UsersModule,
+    FilesModule,
+    TelegramModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: getTelegramConfig,
+    }),
+    HhModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
