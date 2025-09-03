@@ -19,15 +19,15 @@ export class AuthService {
 		const newUser = new this.userModel({
 			email: authDto.login,
 			passwordHash: await hash(authDto.password, salt)
-		})
+		});
 		return newUser.save();
 	}
 
 	async findUserByEmail(email: string) {
-		return this.userModel.findOne({ email }).exec()
+		return this.userModel.findOne({ email }).exec();
 	}
 
-	async validateUser(email: string, password: string): Promise<Pick<UserModel, "email">> {
+	async validateUser(email: string, password: string): Promise<Pick<UserModel, 'email'>> {
 		const user = await this.findUserByEmail(email);
 		if (!user) {
 			throw new UnauthorizedException(USER_NOT_FOUND);
@@ -39,13 +39,13 @@ export class AuthService {
 			throw new UnauthorizedException(WRONG_PASSWORD);
 		}
 
-		return { email: user.email }
+		return { email: user.email };
 	}
 
 	async login(email: string) {
 		const payload = { email };
 		return {
 			access_token: await this.jwtService.signAsync(payload)
-		}
+		};
 	}
 }

@@ -37,7 +37,7 @@ class TopPageAdvantage {
 
 export class CreateTopPageDTO {
   @IsEnum(TopLevelCategory, {
-    message: 'Category must be one of: Curses, Services, Books, Products',
+	message: 'Category must be one of: Curses, Services, Books, Products',
   })
   @Type(() => String)
   firstCategory: TopLevelCategory;

@@ -10,14 +10,14 @@ import { ID_VALIDAION_ERROR } from './ad-validation.constant';
 @Injectable()
 export class IdValidationPipe implements PipeTransform {
   transform(value: string, metadata: ArgumentMetadata) {
-    if (metadata.type != 'param') {
-      return value;
-    }
+	if (metadata.type != 'param') {
+		return value;
+	}
 
-    if (!Types.ObjectId.isValid(value)) {
-      throw new BadRequestException(ID_VALIDAION_ERROR);
-    }
+	if (!Types.ObjectId.isValid(value)) {
+		throw new BadRequestException(ID_VALIDAION_ERROR);
+	}
 
-    return value;
+	return value;
   }
 }

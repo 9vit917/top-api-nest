@@ -7,13 +7,13 @@ import { HhModule } from 'src/hh/hh.module';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([
-      {
-        name: TopPageModel.name,
-        schema: TopPageSchema,
-      },
-    ]),
-    HhModule,
+	MongooseModule.forFeature([
+		{
+		name: TopPageModel.name,
+		schema: TopPageSchema,
+		},
+	]),
+	HhModule,
   ],
   controllers: [TopPageController],
   providers: [TopPageService],

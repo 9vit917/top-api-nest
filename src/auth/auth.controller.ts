@@ -4,7 +4,6 @@ import {
 	Controller,
 	HttpCode,
 	Post,
-	UseGuards,
 	UsePipes,
 	ValidationPipe
 } from '@nestjs/common';
@@ -21,7 +20,7 @@ export class AuthController {
 	async register(@Body() dto: AuthDto) {
 		const oldUser = await this.authService.findUserByEmail(dto.login);
 		if (oldUser) {
-			throw new BadRequestException(ALREADY_REGISTERED_ERROR)
+			throw new BadRequestException(ALREADY_REGISTERED_ERROR);
 		}
 		return this.authService.createUser(dto);
 	}

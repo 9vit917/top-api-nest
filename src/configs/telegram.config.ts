@@ -6,10 +6,10 @@ export const getTelegramConfig = (
 ): ITelegramOptions => {
   const token = configService.get('TELEGRAM_TOKEN');
   if (!token) {
-    throw new Error("TELEGRAM_TOKEN doesn't exist");
+	throw new Error('TELEGRAM_TOKEN doesn\'t exist');
   }
   return {
-    token,
-    chatId: configService.get('TELEGRAM_CHAT_ID') ?? '',
+	token,
+	chatId: configService.get('TELEGRAM_CHAT_ID') ?? '',
   };
 };

@@ -16,26 +16,26 @@ import { HhModule } from './hh/hh.module';
 
 @Module({
   imports: [
-    MongooseModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: getMongoConfig,
-    }),
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
-    AuthModule,
-    TopPageModule,
-    ProductModule,
-    ReviewModule,
-    UsersModule,
-    FilesModule,
-    TelegramModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: getTelegramConfig,
-    }),
-    HhModule,
+	MongooseModule.forRootAsync({
+		imports: [ConfigModule],
+		inject: [ConfigService],
+		useFactory: getMongoConfig,
+	}),
+	ConfigModule.forRoot({
+		isGlobal: true,
+	}),
+	AuthModule,
+	TopPageModule,
+	ProductModule,
+	ReviewModule,
+	UsersModule,
+	FilesModule,
+	TelegramModule.forRootAsync({
+		imports: [ConfigModule],
+		inject: [ConfigService],
+		useFactory: getTelegramConfig,
+	}),
+	HhModule,
   ],
   controllers: [AppController],
   providers: [AppService],

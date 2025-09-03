@@ -9,78 +9,78 @@ import { ReviewModel } from 'src/review/review.model';
 @Injectable()
 export class ProductService {
   constructor(
-    @InjectModel(ProductModel.name)
-    private readonly productModel: Model<ProductModelDocument>,
+	@InjectModel(ProductModel.name)
+	private readonly productModel: Model<ProductModelDocument>,
   ) {}
 
   async create(dto: CreateProductDto) {
-    return this.productModel.create(dto);
+	return this.productModel.create(dto);
   }
 
   async findById(id: string) {
-    return this.productModel.findById(id).exec();
+	return this.productModel.findById(id).exec();
   }
 
   async find() {
-    return this.productModel.find().exec();
+	return this.productModel.find().exec();
   }
 
   async delete(id: string) {
-    return this.productModel.findByIdAndDelete(id).exec();
+	return this.productModel.findByIdAndDelete(id).exec();
   }
 
   async updateById(id: string, dto: CreateProductDto) {
-    return this.productModel.findByIdAndUpdate(id, dto, { new: true }).exec();
+	return this.productModel.findByIdAndUpdate(id, dto, { new: true }).exec();
   }
 
   async findWithReviews(dto: FindProductDto) {
-    return this.productModel
-      .aggregate([
-        {
-          $match: {
-            categories: dto.category,
-          },
-        },
-        {
-          $sort: {
-            _id: 1,
-          },
-        },
-        {
-          $limit: dto.limit,
-        },
-        {
-          $lookup: {
-            from: 'reviewmodels',
-            localField: '_id',
-            foreignField: 'productId',
-            as: 'reviews',
-          },
-        },
-        {
-          $addFields: {
-            reviewCount: { $size: '$reviews' },
-            reviewAvg: { $avg: '$reviews.rating' },
-            reviews: {
-              $function: {
-                body: `function (reviews) {
+	return this.productModel
+		.aggregate([
+		{
+			$match: {
+			categories: dto.category,
+			},
+		},
+		{
+			$sort: {
+			_id: 1,
+			},
+		},
+		{
+			$limit: dto.limit,
+		},
+		{
+			$lookup: {
+			from: 'reviewmodels',
+			localField: '_id',
+			foreignField: 'productId',
+			as: 'reviews',
+			},
+		},
+		{
+			$addFields: {
+			reviewCount: { $size: '$reviews' },
+			reviewAvg: { $avg: '$reviews.rating' },
+			reviews: {
+				$function: {
+				body: `function (reviews) {
                   reviews.sort(
                     (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
                   );
                   return reviews;
                 }`,
-                args: ['$reviews'],
-                lang: 'js',
-              },
-            },
-          },
-        },
-      ])
-      .exec() as unknown as ProductModel &
-      {
-        review: ReviewModel[];
-        reviewCount: number;
-        reviewAvg: number;
-      }[];
+				args: ['$reviews'],
+				lang: 'js',
+				},
+			},
+			},
+		},
+		])
+		.exec() as unknown as ProductModel &
+		{
+		review: ReviewModel[];
+		reviewCount: number;
+		reviewAvg: number;
+		}[];
   }
 }

@@ -11,17 +11,17 @@ import { JwtStratagy } from './strategies/jwt.strategy';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{
-      name: UserModel.name,
-      schema: UserSchema
-    }]),
-    ConfigModule,
-    JwtModule.registerAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: getJWTConfig
-    }),
-    PassportModule
+	MongooseModule.forFeature([{
+		name: UserModel.name,
+		schema: UserSchema
+	}]),
+	ConfigModule,
+	JwtModule.registerAsync({
+		imports: [ConfigModule],
+		inject: [ConfigService],
+		useFactory: getJWTConfig
+	}),
+	PassportModule
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStratagy]

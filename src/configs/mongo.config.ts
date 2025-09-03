@@ -3,8 +3,8 @@ import { ConfigService } from '@nestjs/config';
 export const getMongoConfig = async (configSetvice: ConfigService) => {
 	return {
 		uri: getMongoString(configSetvice),
-	}
-}
+	};
+};
 
 const getMongoString = (configService: ConfigService) => 'mongodb://' +
 	configService.get<string>('MONGO_LOGIN') +

@@ -7,13 +7,13 @@ import { TelegramModule } from 'src/telegram/telegram.module';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([
-      {
-        name: ReviewModel.name,
-        schema: ReviewSchema,
-      },
-    ]),
-    TelegramModule,
+	MongooseModule.forFeature([
+		{
+		name: ReviewModel.name,
+		schema: ReviewSchema,
+		},
+	]),
+	TelegramModule,
   ],
   controllers: [ReviewController],
   providers: [ReviewService],

@@ -1,14 +1,14 @@
-import { INestApplication } from '@nestjs/common'
-import { Test, TestingModule } from '@nestjs/testing'
+import { INestApplication } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 import { disconnect } from 'mongoose';
 import { AppModule } from '../src/app.module';
 import { AuthDto } from 'src/auth/dto/auth.dto';
 
 const loginDto: AuthDto = {
-	login: "qwe@qwe.com",
-	password: "123",
-}
+	login: 'qwe@qwe.com',
+	password: '123',
+};
 
 describe('AuthController (e2e)', () => {
 	let app: INestApplication;
@@ -19,8 +19,8 @@ describe('AuthController (e2e)', () => {
 		}).compile();
 
 		app = moduleFixture.createNestApplication();
-		await app.init()
-	})
+		await app.init();
+	});
 
 	it('/auth/login (Post) success', () => {
 		return request(app.getHttpServer())
@@ -28,18 +28,18 @@ describe('AuthController (e2e)', () => {
 			.send(loginDto)
 			.expect(200)
 			.then(({ body }: request.Response) => {
-				expect(body.access_token).toBeDefined()
-			})
-	})
+				expect(body.access_token).toBeDefined();
+			});
+	});
 
 	it('/auth/login (Post) fail', () => {
 		return request(app.getHttpServer())
 			.post('/auth/login')
-			.send({ ...loginDto, password: "qweqwe" })
-			.expect(401)
-	})
+			.send({ ...loginDto, password: 'qweqwe' })
+			.expect(401);
+	});
 
 	afterAll(() => {
 		disconnect();
-	})
-})
+	});
+});

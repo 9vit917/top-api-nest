@@ -10,7 +10,7 @@ export class UsersService {
 
 
 	async getByEmail(email: string) {
-		return this.userModel.findOne({ email })
+		return this.userModel.findOne({ email });
 	}
 
 	async createUser({ email, password }: { email: string, password: string }) {

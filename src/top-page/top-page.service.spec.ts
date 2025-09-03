@@ -5,14 +5,14 @@ describe('TopPageService', () => {
   let service: TopPageService;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [TopPageService],
-    }).compile();
+	const module: TestingModule = await Test.createTestingModule({
+		providers: [TopPageService],
+	}).compile();
 
-    service = module.get<TopPageService>(TopPageService);
+	service = module.get<TopPageService>(TopPageService);
   });
 
   it('should be defined', () => {
-    expect(service).toBeDefined();
+	expect(service).toBeDefined();
   });
 });

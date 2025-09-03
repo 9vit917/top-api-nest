@@ -3,7 +3,7 @@ export class MFile {
   buffer: Buffer;
 
   constructor(file: Express.Multer.File | MFile) {
-    this.buffer = file.buffer;
-    this.originalname = file.originalname;
+	this.buffer = file.buffer;
+	this.originalname = file.originalname;
   }
 }
