@@ -8,17 +8,17 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { TopPageModel } from './top-page.model';
 import { FindTopPageDto } from './dto/find-top-page.dto';
-import { ConfigService } from '@nestjs/config';
 import { CreateTopPageDTO } from './dto/create-top-page.dto';
 import { TopPageService } from './top-page.service';
 import { IdValidationPipe } from 'src/pipies/ad-validation.pipe';
 import { NOT_FOUND_TOP_PAGE } from './top-page.constants';
 import { HhService } from 'src/hh/hh.service';
+import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 
 @Controller('top-page')
 export class TopPageController {
@@ -27,6 +27,7 @@ export class TopPageController {
     private readonly topPageService: TopPageService,
   ) {}
 
+  @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe())
   @Post('create')
   async create(@Body() dto: CreateTopPageDTO) {
@@ -43,11 +44,13 @@ export class TopPageController {
     return topPage;
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async delete(@Param('id', IdValidationPipe) id: string) {
     return this.topPageService.deleteById(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe())
   @Patch(':id')
   async patch(
@@ -63,6 +66,7 @@ export class TopPageController {
     return this.topPageService.find(dto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @HttpCode(200)
   @Post('/test')
   async test(@Body() dto: FindTopPageDto) {

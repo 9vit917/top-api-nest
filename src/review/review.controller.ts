@@ -31,6 +31,7 @@ export class ReviewController {
     return this.reviewService.create(dto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('notify')
   async notify(@Body() dto: CreateReviewDto) {
     const message =
