@@ -18,13 +18,15 @@ import { CreateTopPageDTO } from './dto/create-top-page.dto';
 import { TopPageService } from './top-page.service';
 import { IdValidationPipe } from 'src/pipies/ad-validation.pipe';
 import { NOT_FOUND_TOP_PAGE } from './top-page.constants';
+import { HhService } from 'src/hh/hh.service';
 
 @Controller('top-page')
 export class TopPageController {
   constructor(
-    private readonly configSetvice: ConfigService,
+    private readonly hhService: HhService,
     private readonly topPageService: TopPageService,
   ) {}
+
   @UsePipes(new ValidationPipe())
   @Post('create')
   async create(@Body() dto: CreateTopPageDTO) {
@@ -59,5 +61,16 @@ export class TopPageController {
   @Post('/find')
   async find(@Body() dto: FindTopPageDto) {
     return this.topPageService.find(dto);
+  }
+
+  @HttpCode(200)
+  @Post('/test')
+  async test(@Body() dto: FindTopPageDto) {
+    const data = await this.topPageService.findForHhUpdate(new Date());
+    for (const page of data) {
+      const hhData = await this.hhService.getData(page.category);
+      page.hh = hhData;
+      await this.topPageService.updateTopPage(page._id, page);
+    }
   }
 }

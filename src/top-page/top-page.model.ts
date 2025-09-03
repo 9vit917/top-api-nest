@@ -7,7 +7,7 @@ export enum TopLevelCategory {
   Products = 'Products',
 }
 
-class Hh {
+export class HhData {
   @Prop()
   count: number;
 
@@ -19,6 +19,9 @@ class Hh {
 
   @Prop()
   seniorSalary: number;
+
+  @Prop()
+  updatedAt: Date;
 }
 
 class TopPageAdvantage {
@@ -46,8 +49,8 @@ export class TopPageModel {
   @Prop()
   category: string;
 
-  @Prop({ type: Hh })
-  hh?: Hh;
+  @Prop({ type: HhData })
+  hh?: HhData;
 
   @Prop([TopPageAdvantage])
   advantage: TopPageAdvantage[];
